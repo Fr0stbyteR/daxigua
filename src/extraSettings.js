@@ -54,12 +54,18 @@ let handleDeviceOrientation = (e) => {
   pm.gravity = cc.v2(tilt, -300);
 };
 if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-  DeviceOrientationEvent.requestPermission().then(response => {
-    alert(response);
-    if (response == 'granted') {
-      window.addEventListener('deviceorientation', handleDeviceOrientation);
-    }
-  }).catch(alert);
+  const handleTouchStart = () => {
+    document.removeEventListener("click", handleTouchStart);
+    document.removeEventListener("touchstart", handleTouchStart);
+    DeviceOrientationEvent.requestPermission().then(response => {
+      alert(response);
+      if (response == 'granted') {
+        window.addEventListener('deviceorientation', handleDeviceOrientation);
+      }
+    }).catch(alert);
+  };
+  document.addEventListener("click", handleTouchStart);
+  document.addEventListener("touchstart", handleTouchStart);
 } else {
   window.addEventListener("deviceorientation", handleDeviceOrientation);
 }
