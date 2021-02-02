@@ -47,11 +47,13 @@ let selectModal = false;
  * @param {DeviceOrientationEvent} e
  */
 let handleDeviceOrientation = (e) => {
+  if (!cc || !cc.director) return;
   const gamma = Math.min(90, Math.max(-90, e.gamma));
   const tilt = gamma > 15 ? (gamma - 15) / 75 * 1000 : gamma < -15 ? (gamma + 15) / 75 * 1000 : 0;
   const pm = cc.director.getPhysicsManager();
   pm.gravity = cc.v2(tilt, -300);
 };
+alert(typeof DeviceOrientationEvent.requestPermission);
 if (typeof DeviceOrientationEvent.requestPermission === 'function') {
   DeviceOrientationEvent.requestPermission().then(response => {
     alert(response);
