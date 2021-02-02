@@ -53,14 +53,13 @@ let handleDeviceOrientation = (e) => {
   const pm = cc.director.getPhysicsManager();
   pm.gravity = cc.v2(tilt, -300);
 };
-alert(typeof DeviceOrientationEvent.requestPermission);
 if (typeof DeviceOrientationEvent.requestPermission === 'function') {
   DeviceOrientationEvent.requestPermission().then(response => {
     alert(response);
     if (response == 'granted') {
       window.addEventListener('deviceorientation', handleDeviceOrientation);
     }
-  })
+  }).catch(alert);
 } else {
   window.addEventListener("deviceorientation", handleDeviceOrientation);
 }
