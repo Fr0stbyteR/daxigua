@@ -54,12 +54,8 @@ let handleDeviceOrientation = (e) => {
   pm.gravity = cc.v2(tilt, -300);
 };
 if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-  const start = document.createElement("div");
-  start.style.position = "absolute";
-  start.style.width = "100%";
-  start.style.height = "100%";
-  start.style.zIndex = 999;
-  document.body.appendChild(start);
+  const start = document.getElementById("start");
+  start.style.display = "block";
   const handleTouchStart = () => {
     start.remove();
     start.removeEventListener("click", handleTouchStart);
