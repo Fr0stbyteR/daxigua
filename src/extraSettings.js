@@ -56,18 +56,18 @@ let handleDeviceOrientation = (e) => {
 if (typeof DeviceOrientationEvent.requestPermission === 'function') {
   const start = document.getElementById("start");
   start.style.display = "block";
-  const handleTouchStart = () => {
-    start.remove();
-    start.removeEventListener("click", handleTouchStart);
-    start.removeEventListener("touchstart", handleTouchStart);
-    DeviceOrientationEvent.requestPermission().then(response => {
-      if (response == 'granted') {
-        window.addEventListener('deviceorientation', handleDeviceOrientation);
-      }
-    }).catch(alert);
-  };
-  start.addEventListener("click", handleTouchStart);
-  start.addEventListener("touchstart", handleTouchStart);
 } else {
   window.addEventListener("deviceorientation", handleDeviceOrientation);
 }
+
+window.handleTouchStart = () => {
+  DeviceOrientationEvent.requestPermission().then(response => {
+    start.remove();
+    if (response == 'granted') {
+      window.addEventListener('deviceorientation', handleDeviceOrientation);
+    }
+  }).catch(r => {
+    start.remove();
+    alert("- " + r)
+  });
+};
