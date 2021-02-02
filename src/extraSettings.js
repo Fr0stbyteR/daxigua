@@ -43,3 +43,16 @@ document.getElementsByTagName("title")[0].innerText = '合成石先生';
 // 开启选分弹窗：将 false 改为 true
 let selectModal = false;
 
+/**
+ * @param {DeviceOrientationEvent} e
+ */
+let handleDeviceOrientation = (e) => {
+  const gamma = Math.min(90, Math.max(-90, e.gamma));
+  const tilt = gamma > 15 ? (gamma - 15) / 75 * 1000 : gamma < -15 ? (gamma + 15) / 75 * 1000 : 0;
+  const pm = cc.director.getPhysicsManager();
+  pm.gravity = cc.v2(tilt, -300);
+};
+try {
+  window.addEventListener("deviceorientation", handleDeviceOrientation);
+} catch {
+}
